@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 3317472650273124726}
   - component: {fileID: 134465093893462170}
   - component: {fileID: 2521946208667829343}
-  - component: {fileID: 7656546233032388769}
+  - component: {fileID: -6143925556593899806}
   m_Layer: 0
   m_Name: CasePrefab
   m_TagString: Untagged
@@ -241,7 +241,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7656546233032388769
+--- !u!114 &-6143925556593899806
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -250,7 +250,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5653609479231218257}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 608b2e473d4a8224a90730b12e330eb2, type: 3}
+  m_Script: {fileID: 11500000, guid: d0943d9eb8e075240b04380a12f26f65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MBh_LightsBlink
   _pointLight: {fileID: 2205799961512105743}
@@ -260,23 +260,23 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 2
-      outSlope: 2
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.50079286
-      value: 0.983391
-      inSlope: 0.13138105
-      outSlope: 0.13138105
+      time: 0.5006584
+      value: 0.8112046
+      inSlope: 0.03700547
+      outSlope: 0.03700547
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.028165419
+      outWeight: 0.1795706
     - serializedVersion: 3
-      time: 1
+      time: 1.0014648
       value: 0
       inSlope: 0
       outSlope: 0
@@ -288,6 +288,6 @@ MonoBehaviour:
     m_PostInfinity: 1
     m_RotationOrder: 4
   _fresnelOutlineMaterial: {fileID: 0}
-  _lightColor: {r: 1, g: 1, b: 0, a: 0}
+  _lightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   _maxLightIntensity: 10
   _lightSpeed: 1
