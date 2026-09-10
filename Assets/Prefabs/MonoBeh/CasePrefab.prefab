@@ -196,7 +196,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7e21cc7e89ec19848a3fcbd7bfce6c86, type: 2}
+  - {fileID: 2100000, guid: c17d62d4ea2a49d4c98ef188c99cabee, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -287,7 +287,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 1
     m_RotationOrder: 4
-  _fresnelOutlineMaterial: {fileID: 0}
+  _material: {fileID: 2100000, guid: c17d62d4ea2a49d4c98ef188c99cabee, type: 2}
   _lightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   _maxLightIntensity: 10
   _lightSpeed: 1
