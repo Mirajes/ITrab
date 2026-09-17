@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(CharacterController))]
 public class SI_Player : MonoBehaviour, SI_IDamagable
 {
     public bool IsAlive => _currentHealth > 0;
@@ -18,25 +17,28 @@ public class SI_Player : MonoBehaviour, SI_IDamagable
     private int _maxHealth = 3;
 
     [SerializeField] private float _moveSpeed;
+    [SerializeField] private float _screenSizeX = 4f;
 
-    [SerializeField] private CharacterController _controller;
     [SerializeField] private SI_Bullet _bulletPrefab;
     [SerializeField] private Transform _firePoint;
     [SerializeField] private float _fireSpeed;
     //private float _nextShotTime;
 
     private float _moveInput;
-    private Vector3 _velocity;
 
-    private void Update()
+    private void FixedUpdate()
     {
         HandleMove();
     }
 
     private void HandleMove()
     {
-        _velocity.x = _moveInput * _moveSpeed;
-        _controller.Move(_velocity * Time.deltaTime);
+        float moveX = this.transform.position.x
+            + _moveInput * _moveSpeed * Time.fixedDeltaTime;
+
+        moveX = Mathf.Clamp(moveX, -_screenSizeX, _screenSizeX);
+
+        this.transform.position = new Vector2(moveX, this.transform.position.y);
     }
 
     private void Shoot()
@@ -61,20 +63,18 @@ public class SI_Player : MonoBehaviour, SI_IDamagable
     }
 }
 
-public class Enemy : MonoBehaviour, SI_IDamagable
+/*
+ * 
+no rigidBody, only math and screenLimits
+private void Update()
 {
-    public void Damage(int damage)
-    {
-        throw new System.NotImplementedException();
-    }
+    // Двигаем объект напрямую через transform
+    float newX = transform.position.x + moveInputX * speed * Time.deltaTime;
+    
+    // Ограничиваем координаты жестко в коде
+    newX = Mathf.Clamp(newX, -screenLimitX, screenLimitX);
+    
+    transform.position = new Vector2(newX, transform.position.y);
 }
 
-public class Bootstrap : MonoBehaviour 
-{
-
-}
-
-public interface SI_IDamagable
-{
-    public void Damage(int damage);
-}
+*/

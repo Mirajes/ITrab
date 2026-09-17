@@ -105,5 +105,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 418398b0c52f90546993dda6ae16fa52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SI_Bullet
-  _shotSpeed: 1
+  _enemyMask:
+    serializedVersion: 2
+    m_Bits: 64
+  _shotSpeed: 3
   _lifeTime: 5
+  _bulletSize: 0.15
+  _damage: 1
