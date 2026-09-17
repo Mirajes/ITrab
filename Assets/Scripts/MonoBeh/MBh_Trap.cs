@@ -6,7 +6,7 @@ public class MBh_Trap : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.TryGetComponent<IDamagable>(out IDamagable damagable))
+        if (other.gameObject.TryGetComponent<MBh_IDamagable>(out MBh_IDamagable damagable))
         {
             damagable.Damage(_damage);
         }

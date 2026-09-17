@@ -2,15 +2,13 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CharacterController))]
-public class MBh_Player : MonoBehaviour, IDamagable
+public class MBh_Player : MonoBehaviour, MBh_IDamagable
 {
     [SerializeField] private CharacterController _controller;
     private InputSystem_Actions _inputMap;
 
     [SerializeField] private float _moveSpeed = 3f;
     private Vector2 _moveInput;
-    [SerializeField] private float _jumpPower = 5f;
-    private bool _isJumping;
     [SerializeField] private float _gravityMultiplier = 1f;
     private Vector3 _velocity;
     public bool IsGrounded => _controller.isGrounded;
