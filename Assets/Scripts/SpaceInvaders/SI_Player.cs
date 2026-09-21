@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -21,10 +22,22 @@ public class SI_Player : MonoBehaviour, SI_IDamagable
 
     [SerializeField] private SI_Bullet _bulletPrefab;
     [SerializeField] private Transform _firePoint;
-    [SerializeField] private float _fireSpeed;
-    //private float _nextShotTime;
+    [SerializeField] private float _fireSpeed = 0.3f;
+    private float _nextShotTime;
+
+    public static event Action Shoot;
 
     private float _moveInput;
+
+    private void Start()
+    {
+        Shoot += OnShoot;
+    }
+
+    private void OnDestroy()
+    {
+        Shoot -= OnShoot;
+    }
 
     private void FixedUpdate()
     {
@@ -41,7 +54,7 @@ public class SI_Player : MonoBehaviour, SI_IDamagable
         this.transform.position = new Vector2(moveX, this.transform.position.y);
     }
 
-    private void Shoot()
+    private void OnShoot()
     {
         SI_Bullet newBullet = Instantiate(_bulletPrefab, _firePoint.position, _firePoint.rotation);
         newBullet.Init();
@@ -54,7 +67,11 @@ public class SI_Player : MonoBehaviour, SI_IDamagable
 
     public void OnShootInput(InputAction.CallbackContext context)
     {
-        Shoot();
+        if (_nextShotTime <= Time.time)
+        {
+            Shoot?.Invoke();
+            _nextShotTime = Time.time + _fireSpeed;
+        }
     }
 
     public void Damage(int damage)

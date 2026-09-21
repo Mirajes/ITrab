@@ -153,8 +153,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -91.4, y: -237.2}
-  m_SizeDelta: {x: 92.8616, y: 23.2154}
+  m_AnchoredPosition: {x: -111.7, y: -516.5}
+  m_SizeDelta: {x: 155.5028, y: 32.1642}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &36474922
 MonoBehaviour:
@@ -203,7 +203,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
+  m_fontSize: 28.75
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -298,6 +298,7 @@ GameObject:
   - component: {fileID: 438749762}
   - component: {fileID: 438749761}
   - component: {fileID: 438749763}
+  - component: {fileID: 438749764}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Untagged
@@ -393,6 +394,52 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   _maxHealth: 1
+--- !u!61 &438749764
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 438749760}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &467005994
 GameObject:
   m_ObjectHideFlags: 0
@@ -940,7 +987,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_ReceiveGI: 1
   m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
+  m_IgnoreNormalsForChartDetection: 1
   m_ImportantGI: 0
   m_StitchLightmapSeams: 1
   m_SelectedEditorRenderState: 0
@@ -974,7 +1021,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -3.1997, z: 0}
-  m_LocalScale: {x: 1, y: 0.6, z: 1}
+  m_LocalScale: {x: 0.542833, y: 0.44852322, z: 0.5901}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2068407752}
@@ -996,7 +1043,7 @@ MonoBehaviour:
   _screenSizeX: 2.1
   _bulletPrefab: {fileID: 4020856027154924088, guid: 499afc3e0d1b2844995f4f8b1bc69ce5, type: 3}
   _firePoint: {fileID: 2068407752}
-  _fireSpeed: 0
+  _fireSpeed: 0.3
 --- !u!61 &1597779725
 BoxCollider2D:
   m_ObjectHideFlags: 0

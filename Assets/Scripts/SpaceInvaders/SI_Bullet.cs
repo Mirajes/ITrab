@@ -61,6 +61,7 @@ public class SI_Bullet : MonoBehaviour
             if (hit.collider.TryGetComponent<SI_IDamagable>(out SI_IDamagable IDamagable))
             {
                 IDamagable.Damage(_damage);
+                Destroy(this.gameObject);
             }
         }
 
