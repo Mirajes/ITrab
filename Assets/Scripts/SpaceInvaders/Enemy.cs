@@ -1,32 +1,46 @@
 using UnityEngine;
 
-public class Enemy : MonoBehaviour, SI_IDamagable
+namespace SI
 {
-    [SerializeField] private int _maxHealth = 1;
-    [SerializeField] private float _stepSize = 0.3f;
-    private int _currentHealth;
-    public int CurrentHealth
+    public class Enemy : MonoBehaviour, IDamagable
     {
-        get => _currentHealth;
-        private set
+        [SerializeField] private int _maxHealth = 1;
+        [SerializeField] private float _stepSize = 0.3f;
+        [SerializeField] private EnemyBullet _bulletPrefab;
+        private int _currentHealth;
+        public int CurrentHealth
         {
-            _currentHealth = value;
+            get => _currentHealth;
+            private set
+            {
+                _currentHealth = value;
+            }
         }
-    }
-    [SerializeField] private int _scoreToGive = 1;
+        [SerializeField] private int _scoreToGive = 1;
 
-    public void Damage(int damage)
-    {
-        CurrentHealth -= damage;
-        if (_currentHealth <= 0)
+        public void Damage(int damage)
         {
-            Die();
+            CurrentHealth -= damage;
+            if (_currentHealth <= 0)
+            {
+                Die();
+            }
         }
-    }
 
-    private void Die()
-    {
-        this.gameObject.SetActive(false);
-        SI_GameManager.ChangeScore?.Invoke(_scoreToGive);
+        private void Die()
+        {
+            this.gameObject.SetActive(false);
+            GameManager.ChangeScore?.Invoke(_scoreToGive);
+        }
+
+        private void Shoot()
+        {
+
+        }
+
+        private void OnStep()
+        {
+
+        }
     }
 }
