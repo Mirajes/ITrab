@@ -22,14 +22,16 @@ namespace SI
         [SerializeField] private float _moveSpeed;
         [SerializeField] private float _screenSizeX = 4f;
 
+        public static float S_ScreenSize;
+
         [SerializeField] private PlayerBullet _bulletPrefab;
         [SerializeField] private Transform _firePoint;
         [SerializeField] private float _fireSpeed = 0.3f;
         private float _nextShotTime;
+        private float _moveInput;
 
         public static event Action Shoot;
-
-        private float _moveInput;
+        public static event Action<int> PlayerHit;
 
         private void Start()
         {
@@ -43,6 +45,11 @@ namespace SI
             Shoot -= OnShoot;
             GameManager.StartGame -= OnStartGame;
             GameManager.Step -= HandleMove;
+        }
+
+        private void Update()
+        {
+            S_ScreenSize = _screenSizeX;
         }
 
         //private void FixedUpdate()
@@ -88,6 +95,7 @@ namespace SI
         public void Damage(int damage)
         {
             CurrentHealth -= damage;
+            PlayerHit?.Invoke(_currentHealth);
         }
     }
 

@@ -7,9 +7,27 @@ namespace SI
     {
         [Header("GameUI")]
         [SerializeField] private TMP_Text _currentScoreText;
-        public void UpdateScoreText(int score)
+        [SerializeField] private TMP_Text _currentHealthText;
+
+        private void Start()
+        {
+            GameManager.ChangeScore += OnChangeScore;
+            Player.PlayerHit += OnPlayerHit;
+        }
+
+        private void OnDestroy()
+        {
+            
+        }
+
+        private void OnChangeScore(int score)
         {
             _currentScoreText.text = $"SCORE: {score}";
+        }
+
+        private void OnPlayerHit(int health)
+        {
+            _currentHealthText.text = $"HEALTH: {health}";
         }
     }
 }

@@ -1223,6 +1223,56 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""GameSpace"",
+            ""id"": ""e22cf306-278f-4861-b774-bae43eb17d67"",
+            ""actions"": [
+                {
+                    ""name"": ""Restart"",
+                    ""type"": ""Button"",
+                    ""id"": ""8ae813a8-b5e3-4693-a45f-a78fc775b53d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false,
+                    ""priority"": 0
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""211ac6db-187c-4989-88a5-dc637be5ee72"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false,
+                    ""priority"": 0
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""d0c7c57f-68fb-4118-8c87-31996d4eafeb"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Restart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f4f861eb-5d5a-4d8d-bb0c-0f6c75401767"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -1315,6 +1365,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_PlayerSpace = asset.FindActionMap("PlayerSpace", throwIfNotFound: true);
         m_PlayerSpace_Move = m_PlayerSpace.FindAction("Move", throwIfNotFound: true);
         m_PlayerSpace_Shoot = m_PlayerSpace.FindAction("Shoot", throwIfNotFound: true);
+        // GameSpace
+        m_GameSpace = asset.FindActionMap("GameSpace", throwIfNotFound: true);
+        m_GameSpace_Restart = m_GameSpace.FindAction("Restart", throwIfNotFound: true);
+        m_GameSpace_Pause = m_GameSpace.FindAction("Pause", throwIfNotFound: true);
     }
 
     ~@InputSystem_Actions()
@@ -1322,6 +1376,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, InputSystem_Actions.Player.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, InputSystem_Actions.UI.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_PlayerSpace.enabled, "This will cause a leak and performance issues, InputSystem_Actions.PlayerSpace.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_GameSpace.enabled, "This will cause a leak and performance issues, InputSystem_Actions.GameSpace.Disable() has not been called.");
     }
 
     /// <summary>
@@ -1879,6 +1934,113 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="PlayerSpaceActions" /> instance referencing this action map.
     /// </summary>
     public PlayerSpaceActions @PlayerSpace => new PlayerSpaceActions(this);
+
+    // GameSpace
+    private readonly InputActionMap m_GameSpace;
+    private List<IGameSpaceActions> m_GameSpaceActionsCallbackInterfaces = new List<IGameSpaceActions>();
+    private readonly InputAction m_GameSpace_Restart;
+    private readonly InputAction m_GameSpace_Pause;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "GameSpace".
+    /// </summary>
+    public struct GameSpaceActions
+    {
+        private @InputSystem_Actions m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public GameSpaceActions(@InputSystem_Actions wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "GameSpace/Restart".
+        /// </summary>
+        public InputAction @Restart => m_Wrapper.m_GameSpace_Restart;
+        /// <summary>
+        /// Provides access to the underlying input action "GameSpace/Pause".
+        /// </summary>
+        public InputAction @Pause => m_Wrapper.m_GameSpace_Pause;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_GameSpace; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="GameSpaceActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(GameSpaceActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="GameSpaceActions" />
+        public void AddCallbacks(IGameSpaceActions instance)
+        {
+            if (instance == null || m_Wrapper.m_GameSpaceActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_GameSpaceActionsCallbackInterfaces.Add(instance);
+            @Restart.started += instance.OnRestart;
+            @Restart.performed += instance.OnRestart;
+            @Restart.canceled += instance.OnRestart;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="GameSpaceActions" />
+        private void UnregisterCallbacks(IGameSpaceActions instance)
+        {
+            @Restart.started -= instance.OnRestart;
+            @Restart.performed -= instance.OnRestart;
+            @Restart.canceled -= instance.OnRestart;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="GameSpaceActions.UnregisterCallbacks(IGameSpaceActions)" />.
+        /// </summary>
+        /// <seealso cref="GameSpaceActions.UnregisterCallbacks(IGameSpaceActions)" />
+        public void RemoveCallbacks(IGameSpaceActions instance)
+        {
+            if (m_Wrapper.m_GameSpaceActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="GameSpaceActions.AddCallbacks(IGameSpaceActions)" />
+        /// <seealso cref="GameSpaceActions.RemoveCallbacks(IGameSpaceActions)" />
+        /// <seealso cref="GameSpaceActions.UnregisterCallbacks(IGameSpaceActions)" />
+        public void SetCallbacks(IGameSpaceActions instance)
+        {
+            foreach (var item in m_Wrapper.m_GameSpaceActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_GameSpaceActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="GameSpaceActions" /> instance referencing this action map.
+    /// </summary>
+    public GameSpaceActions @GameSpace => new GameSpaceActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     /// <summary>
     /// Provides access to the input control scheme.
@@ -2114,5 +2276,27 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnShoot(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "GameSpace" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="GameSpaceActions.AddCallbacks(IGameSpaceActions)" />
+    /// <seealso cref="GameSpaceActions.RemoveCallbacks(IGameSpaceActions)" />
+    public interface IGameSpaceActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "Restart" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnRestart(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Pause" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPause(InputAction.CallbackContext context);
     }
 }

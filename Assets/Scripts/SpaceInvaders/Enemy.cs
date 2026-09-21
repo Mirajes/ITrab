@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace SI
@@ -18,29 +19,49 @@ namespace SI
         }
         [SerializeField] private int _scoreToGive = 1;
 
+        public static event Action<int> Die;
+
+        private void OnEnable()
+        {
+            GameManager.Step += OnStep;
+        }
+
+        private void OnDisable()
+        {
+            GameManager.Step -= OnStep;
+        }
+
         public void Damage(int damage)
         {
             CurrentHealth -= damage;
             if (_currentHealth <= 0)
             {
-                Die();
+                OnDie();
             }
         }
 
-        private void Die()
+        public void Shoot()
         {
-            this.gameObject.SetActive(false);
-            GameManager.ChangeScore?.Invoke(_scoreToGive);
+            A_Bullet newBullet = Instantiate(_bulletPrefab, this.transform.position, this.transform.rotation);
+            newBullet.Init();
         }
 
-        private void Shoot()
+        public void MoveTo(Vector3 newPosition)
         {
-
+            this.transform.position = newPosition;
         }
 
         private void OnStep()
         {
+            MoveTo(new Vector3(this.transform.position.x,
+                this.transform.position.y - _stepSize
+                ));
+        }
 
+        private void OnDie()
+        {
+            this.gameObject.SetActive(false);
+            Die?.Invoke(_scoreToGive);
         }
     }
 }

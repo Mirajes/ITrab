@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 namespace SI
 {
@@ -10,9 +11,12 @@ namespace SI
         [Header("LINKS")]
         [SerializeField] private UIManager _uiManager;
         [SerializeField] private Player _player;
+        [SerializeField] private SideWall _sideWall_R;
+        [SerializeField] private SideWall _sideWall_L;
 
         [Header("CORE")]
         [SerializeField] private float _tickRate = 0.1f;
+
         private InputSystem_Actions _inputMap;
         private int _score;
         private bool _isPaused = false;
@@ -22,6 +26,7 @@ namespace SI
             private set
             {
                 _score = value;
+                ChangeScore?.Invoke(Score);
             }
         }
 
@@ -34,8 +39,17 @@ namespace SI
         {
             InitInputs();
 
-            ChangeScore += OnChangedScore;
             GameOver += OnGameOver;
+            Enemy.Die += OnEnemyDie;
+        }
+
+
+        private void OnDestroy()
+        {
+            DeInitInputs();
+
+            GameOver -= OnGameOver;
+            Enemy.Die -= OnEnemyDie;
         }
 
         private void OnStartGame(InputAction.CallbackContext context)
@@ -46,14 +60,6 @@ namespace SI
             StartCoroutine(StepRoutine());
 
             StartGame?.Invoke();
-        }
-
-        private void OnDestroy()
-        {
-            ChangeScore -= OnChangedScore;
-            GameOver -= OnGameOver;
-
-            DeInitInputs();
         }
 
         private IEnumerator StepRoutine()
@@ -83,6 +89,8 @@ namespace SI
 
             _inputMap.PlayerSpace.Move.started += OnStartGame;
             _inputMap.PlayerSpace.Shoot.started += OnStartGame;
+            _inputMap.GameSpace.Pause.started += OnPauseInput;
+            _inputMap.GameSpace.Restart.started += OnRestartInput;
 
             _inputMap.PlayerSpace.Move.started += _player.OnMoveInput;
             _inputMap.PlayerSpace.Shoot.started += _player.OnShootInput;
@@ -97,22 +105,63 @@ namespace SI
 
             _inputMap.PlayerSpace.Move.started -= OnStartGame;
             _inputMap.PlayerSpace.Shoot.started -= OnStartGame;
+            _inputMap.GameSpace.Pause.started -= OnPauseInput;
+            _inputMap.GameSpace.Restart.started -= OnRestartInput;
 
             _inputMap.PlayerSpace.Move.started -= _player.OnMoveInput;
             _inputMap.PlayerSpace.Shoot.started -= _player.OnShootInput;
             _inputMap.Dispose();
         }
 
-        private void OnChangedScore(int score)
+        private void OnPauseInput(InputAction.CallbackContext context)
         {
-            _uiManager.UpdateScoreText(score);
+            _isPaused = !_isPaused;
+
+            if (_isPaused)
+                _inputMap.PlayerSpace.Disable();
+            else
+                _inputMap.PlayerSpace.Enable();
+                
+        }
+
+        private void OnRestartInput(InputAction.CallbackContext context)
+        {
+            SceneManager.LoadScene("SpaceInvaders");
         }
 
         private void OnGameOver()
         {
             DeInitInputs();
         }
+
+        private void OnEnemyDie(int scoreToAdd)
+        {
+            Score += scoreToAdd;
+        }
+
+        private void MoveSideWalls()
+        {
+            //_sideWall_L.transform.position = 
+        }
     }
 
     // InputSystem.onAnyButtonPress.CallOnce(control => OnAnyKeyPressed(control))
+
+    public class SideWall : MonoBehaviour
+    {
+        private void Start()
+        {
+            
+        }
+
+        private void OnDestroy()
+        {
+            
+        }
+
+        private void OnStep()
+        {
+            
+        }
+    }
 }

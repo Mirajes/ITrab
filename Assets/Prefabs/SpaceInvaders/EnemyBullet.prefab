@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7158410702401901133}
   - component: {fileID: 7420020605344487732}
-  - component: {fileID: 4020856027154924088}
+  - component: {fileID: -6070401192664780454}
   m_Layer: 0
   m_Name: EnemyBullet
   m_TagString: Untagged
@@ -93,7 +93,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
---- !u!114 &4020856027154924088
+--- !u!114 &-6070401192664780454
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -102,9 +102,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7889550979481469933}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 418398b0c52f90546993dda6ae16fa52, type: 3}
+  m_Script: {fileID: 11500000, guid: ddb269baec21b4548868db1e146dfcfb, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SI_Bullet
+  m_EditorClassIdentifier: Assembly-CSharp::SI.EnemyBullet
   _enemyMask:
     serializedVersion: 2
     m_Bits: 128

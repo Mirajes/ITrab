@@ -1137,6 +1137,56 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "GameSpace",
+            "id": "e22cf306-278f-4861-b774-bae43eb17d67",
+            "actions": [
+                {
+                    "name": "Restart",
+                    "type": "Button",
+                    "id": "8ae813a8-b5e3-4693-a45f-a78fc775b53d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "211ac6db-187c-4989-88a5-dc637be5ee72",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "d0c7c57f-68fb-4118-8c87-31996d4eafeb",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Restart",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f4f861eb-5d5a-4d8d-bb0c-0f6c75401767",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [
