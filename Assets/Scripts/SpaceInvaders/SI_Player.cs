@@ -32,16 +32,13 @@ public class SI_Player : MonoBehaviour, SI_IDamagable
     private void Start()
     {
         Shoot += OnShoot;
+        SI_GameManager.Step += HandleMove;
     }
 
     private void OnDestroy()
     {
         Shoot -= OnShoot;
-    }
-
-    private void FixedUpdate()
-    {
-        HandleMove();
+        SI_GameManager.Step -= HandleMove;
     }
 
     private void HandleMove()
