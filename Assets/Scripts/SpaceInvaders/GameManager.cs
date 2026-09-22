@@ -35,8 +35,11 @@ namespace SI
         public static event Action GameOver;
         public static Action<int> ChangeScore;
 
+        public static readonly float S_ScreenSize = 4f;
+
         private void Awake()
         {
+            MoveSideWalls();
             InitInputs();
 
             GameOver += OnGameOver;
@@ -50,6 +53,11 @@ namespace SI
 
             GameOver -= OnGameOver;
             Enemy.Die -= OnEnemyDie;
+        }
+
+        private void FixedUpdate()
+        {
+            
         }
 
         private void OnStartGame(InputAction.CallbackContext context)
@@ -141,27 +149,8 @@ namespace SI
 
         private void MoveSideWalls()
         {
-            //_sideWall_L.transform.position = 
-        }
-    }
-
-    // InputSystem.onAnyButtonPress.CallOnce(control => OnAnyKeyPressed(control))
-
-    public class SideWall : MonoBehaviour
-    {
-        private void Start()
-        {
-            
-        }
-
-        private void OnDestroy()
-        {
-            
-        }
-
-        private void OnStep()
-        {
-            
+            _sideWall_L.transform.position = new Vector3(-S_ScreenSize, 0f);
+            _sideWall_R.transform.position = new Vector3(S_ScreenSize, 0f);
         }
     }
 }

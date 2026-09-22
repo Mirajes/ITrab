@@ -22,8 +22,6 @@ namespace SI
         [SerializeField] private float _moveSpeed;
         [SerializeField] private float _screenSizeX = 4f;
 
-        public static float S_ScreenSize;
-
         [SerializeField] private PlayerBullet _bulletPrefab;
         [SerializeField] private Transform _firePoint;
         [SerializeField] private float _fireSpeed = 0.3f;
@@ -47,11 +45,6 @@ namespace SI
             GameManager.Step -= HandleMove;
         }
 
-        private void Update()
-        {
-            S_ScreenSize = _screenSizeX;
-        }
-
         //private void FixedUpdate()
         //{
         //    HandleMove();
@@ -62,14 +55,20 @@ namespace SI
             float moveX = this.transform.position.x
                 + _moveInput * _moveSpeed * Time.fixedDeltaTime;
 
-            moveX = Mathf.Clamp(moveX, -_screenSizeX, _screenSizeX);
+            moveX = Mathf.Clamp(moveX,
+                -GameManager.S_ScreenSize,
+                GameManager.S_ScreenSize
+                );
 
             this.transform.position = new Vector2(moveX, this.transform.position.y);
         }
 
         private void OnShoot()
         {
-            PlayerBullet newBullet = Instantiate(_bulletPrefab, _firePoint.position, _firePoint.rotation);
+            PlayerBullet newBullet = Instantiate(_bulletPrefab,
+                _firePoint.position,
+                _firePoint.rotation
+                );
             newBullet.Init();
         }
 
