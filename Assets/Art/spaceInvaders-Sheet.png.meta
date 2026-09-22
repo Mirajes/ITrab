@@ -123,7 +123,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: invdr-EnemyOctopus_1
+      name: invdr-EnemyOctopus_0
       rect:
         serializedVersion: 2
         x: 0
@@ -145,7 +145,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: invdr-EnemyFly_1
+      name: invdr-EnemyFly_0
       rect:
         serializedVersion: 2
         x: 32
@@ -167,7 +167,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: invdr-EnemyMask_1
+      name: invdr-EnemyMask_0
       rect:
         serializedVersion: 2
         x: 64
@@ -189,7 +189,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: invdr-Player_1
+      name: invdr-Player_0
       rect:
         serializedVersion: 2
         x: 96
@@ -211,7 +211,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: invdr-EnemyOctopus_2
+      name: invdr-EnemyOctopus_1
       rect:
         serializedVersion: 2
         x: 0
@@ -233,7 +233,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: invdr-EnemyFly_2
+      name: invdr-EnemyFly_1
       rect:
         serializedVersion: 2
         x: 32
@@ -255,7 +255,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: invdr-EnemyMask_2
+      name: invdr-EnemyMask_1
       rect:
         serializedVersion: 2
         x: 64
@@ -277,7 +277,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: invdr-Player_2
+      name: invdr-Player_1
       rect:
         serializedVersion: 2
         x: 96
@@ -317,14 +317,14 @@ TextureImporter:
         value: False
     nameFileIdTable:
       c: -1246587093
-      invdr-EnemyFly_1: 1109611899
-      invdr-EnemyFly_2: 1943535666
-      invdr-EnemyMask_1: 1283606103
-      invdr-EnemyMask_2: 982472419
-      invdr-EnemyOctopus_1: -1246587093
-      invdr-EnemyOctopus_2: 2129909864
-      invdr-Player_1: 1737474605
-      invdr-Player_2: -1571139307
+      invdr-EnemyFly_0: 1109611899
+      invdr-EnemyFly_1: 1943535666
+      invdr-EnemyMask_0: 1283606103
+      invdr-EnemyMask_1: 982472419
+      invdr-EnemyOctopus_0: -1246587093
+      invdr-EnemyOctopus_1: 2129909864
+      invdr-Player_0: 1737474605
+      invdr-Player_1: -1571139307
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

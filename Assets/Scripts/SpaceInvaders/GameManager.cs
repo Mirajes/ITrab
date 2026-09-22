@@ -15,6 +15,7 @@ namespace SI
         [SerializeField] private SideWall _sideWall_L;
 
         [Header("CORE")]
+        [SerializeField] private LevelBounds _levelBounds;
         [SerializeField] private float _tickRate = 0.1f;
 
         private InputSystem_Actions _inputMap;
@@ -34,8 +35,6 @@ namespace SI
         public static event Action StartGame;
         public static event Action GameOver;
         public static Action<int> ChangeScore;
-
-        public static readonly float S_ScreenSize = 4f;
 
         private void Awake()
         {
@@ -57,7 +56,7 @@ namespace SI
 
         private void FixedUpdate()
         {
-            
+
         }
 
         private void OnStartGame(InputAction.CallbackContext context)
@@ -129,7 +128,7 @@ namespace SI
                 _inputMap.PlayerSpace.Disable();
             else
                 _inputMap.PlayerSpace.Enable();
-                
+
         }
 
         private void OnRestartInput(InputAction.CallbackContext context)
@@ -149,8 +148,8 @@ namespace SI
 
         private void MoveSideWalls()
         {
-            _sideWall_L.transform.position = new Vector3(-S_ScreenSize, 0f);
-            _sideWall_R.transform.position = new Vector3(S_ScreenSize, 0f);
+            _sideWall_L.transform.position = new Vector3(_levelBounds.MinX - _sideWall_L.WallSize, 0f);
+            _sideWall_R.transform.position = new Vector3(_levelBounds.MaxX + _sideWall_R.WallSize, 0f);
         }
     }
 }

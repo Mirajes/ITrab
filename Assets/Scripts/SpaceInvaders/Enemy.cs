@@ -5,6 +5,11 @@ namespace SI
 {
     public class Enemy : MonoBehaviour, IDamagable
     {
+        [SerializeField] private SpriteRenderer _renderer;
+        [SerializeField] private Sprite _sprite0;
+        [SerializeField] private Sprite _sprite1;
+        private int _currentSprite = 0;
+
         [SerializeField] private int _maxHealth = 1;
         [SerializeField] private float _stepSize = 0.3f;
         [SerializeField] private EnemyBullet _bulletPrefab;
@@ -53,15 +58,35 @@ namespace SI
 
         private void OnStep()
         {
-            MoveTo(new Vector3(this.transform.position.x,
-                this.transform.position.y - _stepSize
-                ));
+            //Move();
+            ChangeSprite();
         }
 
         private void OnDie()
         {
             this.gameObject.SetActive(false);
             Die?.Invoke(_scoreToGive);
+        }
+
+        private void Move()
+        {
+            MoveTo(new Vector3(this.transform.position.x,
+                this.transform.position.y - _stepSize
+                ));
+        }
+
+        private void ChangeSprite()
+        {
+            if (_currentSprite == 0) // TODO: improve this
+            {
+                _currentSprite = 1;
+                _renderer.sprite = _sprite1;
+            }
+            else
+            {
+                _currentSprite = 0;
+                _renderer.sprite = _sprite0;
+            }
         }
     }
 }

@@ -12,7 +12,7 @@ namespace SI
         private void Start()
         {
             GameManager.ChangeScore += OnChangeScore;
-            Player.PlayerHit += OnPlayerHit;
+            Player.HealthUpdate += OnPlayerHit;
         }
 
         private void OnDestroy()
