@@ -5,7 +5,7 @@ namespace SI
 {
     public class EnemyManager : MonoBehaviour
     {
-        private List<Enemy> _enemies = new();
+        [SerializeField] private List<Enemy> _enemies = new();
 
         private void Start()
         {
@@ -26,8 +26,11 @@ namespace SI
         {
             foreach (Enemy enemy in _enemies)
             {
-                // change
+                enemy.WeNeedToGoDown();
+                enemy.ChangeDirection();
             }
         }
+
+        // enemySpawn()
     }
 }

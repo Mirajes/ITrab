@@ -20,22 +20,11 @@ namespace SI
         private void Start()
         {
             _checkSize = new Vector2(_levelBounds.Height, _wallSize);
-
-            GameManager.Step += OnStep;
-        }
-
-        private void OnDestroy()
-        {
-            GameManager.Step -= OnStep;
-        }
-
-        private void OnStep()
-        {
-            
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
+            print(collision.name);
             if (collision.contactMask != _enemyMask) return;
 
             EnemyTouch?.Invoke();

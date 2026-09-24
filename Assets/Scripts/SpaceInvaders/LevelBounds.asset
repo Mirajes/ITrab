@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cd136efc37af374eb0f8ad577aad5c4, type: 3}
   m_Name: LevelBounds
   m_EditorClassIdentifier: Assembly-CSharp::LevelBounds
-  _width: 12
+  _width: 16
   _height: 30

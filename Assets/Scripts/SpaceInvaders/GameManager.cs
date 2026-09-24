@@ -8,6 +8,8 @@ namespace SI
 {
     public class GameManager : MonoBehaviour
     {
+        private const float TICKRATE = 0.2f;
+
         [Header("LINKS")]
         [SerializeField] private UIManager _uiManager;
         [SerializeField] private Player _player;
@@ -17,6 +19,7 @@ namespace SI
         [Header("CORE")]
         [SerializeField] private LevelBounds _levelBounds;
         [SerializeField] private float _tickRate = 0.1f;
+        [SerializeField] private float _tickPerDie = 0.01f;
 
         private InputSystem_Actions _inputMap;
         private int _score;
@@ -42,6 +45,7 @@ namespace SI
             InitInputs();
 
             GameOver += OnGameOver;
+            Enemy.DieScore += OnEnemyDieScore;
             Enemy.Die += OnEnemyDie;
         }
 
@@ -51,12 +55,8 @@ namespace SI
             DeInitInputs();
 
             GameOver -= OnGameOver;
+            Enemy.DieScore -= OnEnemyDieScore;
             Enemy.Die -= OnEnemyDie;
-        }
-
-        private void FixedUpdate()
-        {
-
         }
 
         private void OnStartGame(InputAction.CallbackContext context)
@@ -141,7 +141,7 @@ namespace SI
             DeInitInputs();
         }
 
-        private void OnEnemyDie(int scoreToAdd)
+        private void OnEnemyDieScore(int scoreToAdd)
         {
             Score += scoreToAdd;
         }
@@ -150,6 +150,11 @@ namespace SI
         {
             _sideWall_L.transform.position = new Vector3(_levelBounds.MinX - _sideWall_L.WallSize, 0f);
             _sideWall_R.transform.position = new Vector3(_levelBounds.MaxX + _sideWall_R.WallSize, 0f);
+        }
+
+        private void OnEnemyDie()
+        {
+            _tickRate -= _tickPerDie;
         }
     }
 }
