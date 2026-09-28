@@ -18,8 +18,9 @@ namespace SI
 
         [Header("CORE")]
         [SerializeField] private LevelBounds _levelBounds;
-        [SerializeField] private float _tickRate = 0.1f;
-        [SerializeField] private float _tickPerDie = 0.01f;
+        [SerializeField] private float _tickRate = 0.3f;
+        [SerializeField] private float _tickPerDie = 0.005f;
+        [SerializeField] private float _tickRateCap = 0.1f;
 
         private InputSystem_Actions _inputMap;
         private int _score;
@@ -37,6 +38,7 @@ namespace SI
         public static event Action Step;
         public static event Action StartGame;
         public static event Action GameOver;
+        public static event Action PlayerWin;
         public static Action<int> ChangeScore;
 
         private void Awake()
@@ -45,7 +47,6 @@ namespace SI
             InitInputs();
 
             GameOver += OnGameOver;
-            Enemy.DieScore += OnEnemyDieScore;
             Enemy.Die += OnEnemyDie;
         }
 
@@ -55,7 +56,6 @@ namespace SI
             DeInitInputs();
 
             GameOver -= OnGameOver;
-            Enemy.DieScore -= OnEnemyDieScore;
             Enemy.Die -= OnEnemyDie;
         }
 
@@ -94,14 +94,22 @@ namespace SI
         {
             _inputMap = new();
 
-            _inputMap.PlayerSpace.Move.started += OnStartGame;
-            _inputMap.PlayerSpace.Shoot.started += OnStartGame;
             _inputMap.GameSpace.Pause.started += OnPauseInput;
             _inputMap.GameSpace.Restart.started += OnRestartInput;
 
+            InitPlayerInputs();
+
+            _inputMap.Enable();
+        }
+
+        private void InitPlayerInputs()
+        {
+            _inputMap.PlayerSpace.Move.started += OnStartGame;
+            _inputMap.PlayerSpace.Shoot.started += OnStartGame;
+
+
             _inputMap.PlayerSpace.Move.started += _player.OnMoveInput;
             _inputMap.PlayerSpace.Shoot.started += _player.OnShootInput;
-            _inputMap.Enable();
         }
 
         private void DeInitInputs()
@@ -110,14 +118,24 @@ namespace SI
 
             _inputMap.Disable();
 
-            _inputMap.PlayerSpace.Move.started -= OnStartGame;
-            _inputMap.PlayerSpace.Shoot.started -= OnStartGame;
             _inputMap.GameSpace.Pause.started -= OnPauseInput;
             _inputMap.GameSpace.Restart.started -= OnRestartInput;
 
+            _inputMap.Dispose();
+        }
+
+        private void DeInitPlayerInputs()
+        {
+            _inputMap.PlayerSpace.Move.started -= OnStartGame;
+            _inputMap.PlayerSpace.Shoot.started -= OnStartGame;
             _inputMap.PlayerSpace.Move.started -= _player.OnMoveInput;
             _inputMap.PlayerSpace.Shoot.started -= _player.OnShootInput;
-            _inputMap.Dispose();
+        }
+
+        private void OnEnemyDie(Enemy enemy)
+        {
+            OnEnemyDieScore(enemy.ScoreToGive);
+            ChangeTickRate();
         }
 
         private void OnPauseInput(InputAction.CallbackContext context)
@@ -138,7 +156,7 @@ namespace SI
 
         private void OnGameOver()
         {
-            DeInitInputs();
+            DeInitPlayerInputs();
         }
 
         private void OnEnemyDieScore(int scoreToAdd)
@@ -152,8 +170,14 @@ namespace SI
             _sideWall_R.transform.position = new Vector3(_levelBounds.MaxX + _sideWall_R.WallSize, 0f);
         }
 
-        private void OnEnemyDie()
+        private void ChangeTickRate()
         {
+            if (_tickRate < _tickRateCap)
+            {
+                _tickRate = _tickRateCap;
+                return;
+            }
+
             _tickRate -= _tickPerDie;
         }
     }

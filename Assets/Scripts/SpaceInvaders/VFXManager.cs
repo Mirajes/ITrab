@@ -9,12 +9,12 @@ namespace SI
 
         private void OnEnable()
         {
-            Enemy.DieExplosion += OnEnemyExplode;
+            Enemy.DieVFX += OnEnemyExplode;
         }
 
         private void OnDisable()
         {
-            Enemy.DieExplosion -= OnEnemyExplode;
+            Enemy.DieVFX -= OnEnemyExplode;
         }
 
         private void OnEnemyExplode(Vector3 position, Color color)

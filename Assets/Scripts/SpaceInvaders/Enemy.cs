@@ -5,6 +5,8 @@ namespace SI
 {
     public class Enemy : MonoBehaviour, IDamagable
     {
+        public int ScoreToGive => _scoreToGive;
+
         [Header("Anim")]
         [SerializeField] private SpriteRenderer _renderer;
         [SerializeField] private Sprite _sprite0;
@@ -33,9 +35,8 @@ namespace SI
             }
         }
 
-        public static event Action Die;
-        public static event Action<int> DieScore;
-        public static event Action<Vector3, Color> DieExplosion;
+        public static event Action<Enemy> Die;
+        public static event Action<Vector3, Color> DieVFX;
 
         private void OnEnable()
         {
@@ -80,9 +81,8 @@ namespace SI
         private void OnDie()
         {
             this.gameObject.SetActive(false);
-            Die?.Invoke();
-            DieScore?.Invoke(_scoreToGive);
-            DieExplosion?.Invoke(this.transform.position, _bodyColor);
+            Die?.Invoke(this);
+            DieVFX?.Invoke(this.transform.position, _bodyColor);
         }
 
         private void Move()
