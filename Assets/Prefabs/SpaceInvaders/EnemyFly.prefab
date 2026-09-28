@@ -110,10 +110,10 @@ MonoBehaviour:
   _sprite0: {fileID: 1109611899, guid: e64e616c04ec61e4abcce2fb2c3a9bb8, type: 3}
   _sprite1: {fileID: 1943535666, guid: e64e616c04ec61e4abcce2fb2c3a9bb8, type: 3}
   _bodyColor: {r: 1, g: 0, b: 0, a: 1}
-  _scoreToGive: 1
+  _scoreToGive: 10
   _maxHealth: 1
   _stepSizeX: 0.3
-  _stepSizeY: 1
+  _stepSizeY: 0.2
   _bulletPrefab: {fileID: -6070401192664780454, guid: 58209f0145af1af4aaf44b6bda733c18, type: 3}
 --- !u!61 &5090561135079472315
 BoxCollider2D:

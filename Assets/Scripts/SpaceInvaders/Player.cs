@@ -22,7 +22,6 @@ namespace SI
         [SerializeField] private LevelBounds _levelBounds;
 
         [SerializeField] private float _moveSpeed;
-        [SerializeField] private float _screenSizeX = 4f;
 
         [SerializeField] private SpriteRenderer _renderer;
         [SerializeField] private Sprite _sprite0;
@@ -31,8 +30,10 @@ namespace SI
 
         [SerializeField] private PlayerBullet _bulletPrefab;
         [SerializeField] private Transform _firePoint;
-        [SerializeField] private float _fireSpeed = 0.3f;
-        private float _nextShotTime;
+        [SerializeField] private int _shootInterval = 4;
+        private int _stepsWithoutShoot = 0;
+        //[SerializeField] private float _fireSpeed = 0.3f;
+        //private float _nextShotTime;
         private float _moveInput;
 
         public static event Action Shoot;
@@ -42,22 +43,28 @@ namespace SI
         {
             Shoot += OnShoot;
             GameManager.StartGame += OnStartGame;
-            GameManager.Step += HandleMove;
-            GameManager.Step += SpriteChange;
+            GameManager.Step += OnStep;
         }
 
         private void OnDestroy()
         {
             Shoot -= OnShoot;
             GameManager.StartGame -= OnStartGame;
-            GameManager.Step -= HandleMove;
-            GameManager.Step -= SpriteChange;
+            GameManager.Step -= OnStep;
         }
 
         //private void FixedUpdate()
         //{
         //    HandleMove();
         //}
+
+        private void OnStep()
+        {
+            HandleMove();
+            SpriteChange();
+
+            _stepsWithoutShoot++;
+        }
 
         private void HandleMove()
         {
@@ -84,6 +91,7 @@ namespace SI
         private void OnStartGame()
         {
             _moveInput = 1;
+            HealthUpdate?.Invoke(_currentHealth);
         }
 
         private void SpriteChange() // TODO: improve this
@@ -107,11 +115,17 @@ namespace SI
 
         public void OnShootInput(InputAction.CallbackContext context)
         {
-            if (_nextShotTime <= Time.time)
+            if (_stepsWithoutShoot >= _shootInterval)
             {
+                _stepsWithoutShoot = 0;
                 Shoot?.Invoke();
-                _nextShotTime = Time.time + _fireSpeed;
             }
+
+            //if (_nextShotTime <= Time.time)
+            //{
+            //    Shoot?.Invoke();
+            //    _nextShotTime = Time.time + _fireSpeed;
+            //}
         }
 
         public void Damage(int damage)

@@ -17,7 +17,7 @@ namespace SI
         [Header("Shoot")]
         [SerializeField] private float _shootChance = 0.2f;
         [SerializeField] private float _shootChanceRaisePerDie = 0.03f;
-        private float _shootChanceCap = 5f;
+        [SerializeField] private float _shootChanceCap = 0.8f;
 
         private void Start()
         {
@@ -58,6 +58,18 @@ namespace SI
             }
         }
 
+        private void RaiseShootChance()
+        {
+            if (_shootChance >= _shootChanceCap)
+            {
+                _shootChance = _shootChanceCap;
+            }
+            else
+            {
+                _shootChance += _shootChanceRaisePerDie;
+            }
+        }
+
         private void OnEnemyTouch()
         {
             ChangeMoveDirection();
@@ -69,6 +81,8 @@ namespace SI
                 _aliveEnemy.Remove(enemy);
             else
                 Debug.Log($"[EnemyManager] - no enemy in alive list -> {enemy}");
+
+            RaiseShootChance();
         }
 
         private void ChangeMoveDirection()

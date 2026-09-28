@@ -48,6 +48,7 @@ namespace SI
 
             GameOver += OnGameOver;
             Enemy.Die += OnEnemyDie;
+            GameOverLine.EnemyTouch += OnGameOver;
         }
 
 
@@ -57,6 +58,7 @@ namespace SI
 
             GameOver -= OnGameOver;
             Enemy.Die -= OnEnemyDie;
+            GameOverLine.EnemyTouch -= OnGameOver;
         }
 
         private void OnStartGame(InputAction.CallbackContext context)
