@@ -40,6 +40,7 @@ namespace SI
 
         private void OnEnable()
         {
+            _currentHealth = _maxHealth;
             GameManager.Step += OnStep;
         }
 
