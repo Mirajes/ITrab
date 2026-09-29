@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,12 +20,13 @@ namespace SI
         [SerializeField] private float _shootChanceRaisePerDie = 0.03f;
         [SerializeField] private float _shootChanceCap = 0.8f;
 
+        public static event Action AllEnemiesDie;
+
         private void Start()
         {
             SpawnEnemies();
 
             SideWall.EnemyTouch += OnEnemyTouch;
-            GameManager.PlayerWin += OnPlayerWin;
             GameManager.Step += OnStep;
             Enemy.Die += OnDie;
         }
@@ -32,14 +34,8 @@ namespace SI
         private void OnDestroy()
         {
             SideWall.EnemyTouch -= OnEnemyTouch;
-            GameManager.PlayerWin -= OnPlayerWin;
             GameManager.Step -= OnStep;
             Enemy.Die -= OnDie;
-        }
-
-        private void OnPlayerWin()
-        {
-            GameManager.Step -= OnStep;
         }
 
         private void OnStep()
@@ -49,10 +45,10 @@ namespace SI
 
         private void DeciseToShoot()
         {
-            float procChance = Random.Range(0f, _shootChanceCap);
+            float procChance = UnityEngine.Random.Range(0f, _shootChanceCap);
             if (procChance <= _shootChance)
             {
-                int randomEnemyIndex = Random.Range(0, _aliveEnemy.Count);
+                int randomEnemyIndex = UnityEngine.Random.Range(0, _aliveEnemy.Count);
                 Enemy shooterEnemy = _aliveEnemy[randomEnemyIndex];
                 shooterEnemy.Shoot();
             }
@@ -83,6 +79,12 @@ namespace SI
                 Debug.Log($"[EnemyManager] - no enemy in alive list -> {enemy}");
 
             RaiseShootChance();
+
+            if (_aliveEnemy.Count <= 0)
+            {
+                GameManager.Step -= OnStep;
+                AllEnemiesDie?.Invoke();
+            }
         }
 
         private void ChangeMoveDirection()

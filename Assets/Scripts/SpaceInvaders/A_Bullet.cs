@@ -46,7 +46,6 @@ namespace SI
             _alivedDistance += Mathf.Abs(transform.position.y - nextPos.y);
 
             transform.position = nextPos;
-            Debug.Log("I MOVING");
             CheckHit();
 
             if (_alivedDistance >= _lifeDistance)

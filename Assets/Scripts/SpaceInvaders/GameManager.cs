@@ -8,7 +8,15 @@ namespace SI
 {
     public class GameManager : MonoBehaviour
     {
-        private const float TICKRATE = 0.2f;
+        public int Score
+        {
+            get => _score;
+            private set
+            {
+                _score = value;
+                ChangeScore?.Invoke(Score);
+            }
+        }
 
         [Header("LINKS")]
         [SerializeField] private UIManager _uiManager;
@@ -25,30 +33,24 @@ namespace SI
         private InputSystem_Actions _inputMap;
         private int _score;
         private bool _isPaused = false;
-        public int Score
-        {
-            get => _score;
-            private set
-            {
-                _score = value;
-                ChangeScore?.Invoke(Score);
-            }
-        }
+        private IEnumerator _stepRoutine;
+
 
         public static event Action Step;
         public static event Action StartGame;
         public static event Action GameOver;
-        public static event Action PlayerWin;
-        public static Action<int> ChangeScore;
+        public static event Action<int> PlayerWin;
+        public static event Action<int> ChangeScore;
 
         private void Awake()
         {
             MoveSideWalls();
             InitInputs();
 
+            EnemyManager.AllEnemiesDie += OnAllEnemiesDie;
             GameOver += OnGameOver;
             Enemy.Die += OnEnemyDie;
-            GameOverLine.EnemyTouch += OnGameOver;
+            EndLine.EnemyTouch += OnTouchGameOver;
         }
 
 
@@ -56,9 +58,10 @@ namespace SI
         {
             DeInitInputs();
 
+            EnemyManager.AllEnemiesDie -= OnAllEnemiesDie;
             GameOver -= OnGameOver;
             Enemy.Die -= OnEnemyDie;
-            GameOverLine.EnemyTouch -= OnGameOver;
+            EndLine.EnemyTouch -= OnTouchGameOver;
         }
 
         private void OnStartGame(InputAction.CallbackContext context)
@@ -66,7 +69,8 @@ namespace SI
             _inputMap.PlayerSpace.Move.started -= OnStartGame;
             _inputMap.PlayerSpace.Shoot.started -= OnStartGame;
 
-            StartCoroutine(StepRoutine());
+            _stepRoutine = StepRoutine();
+            StartCoroutine(_stepRoutine);
 
             StartGame?.Invoke();
         }
@@ -140,6 +144,12 @@ namespace SI
             ChangeTickRate();
         }
 
+        private void OnAllEnemiesDie()
+        {
+            StopCoroutine(_stepRoutine);
+            PlayerWin?.Invoke(_score);
+        }
+
         private void OnPauseInput(InputAction.CallbackContext context)
         {
             _isPaused = !_isPaused;
@@ -154,6 +164,12 @@ namespace SI
         private void OnRestartInput(InputAction.CallbackContext context)
         {
             SceneManager.LoadScene("SpaceInvaders");
+        }
+
+        private void OnTouchGameOver() // vot eto kasha
+        {
+            StopCoroutine(_stepRoutine);
+            GameOver?.Invoke();
         }
 
         private void OnGameOver()

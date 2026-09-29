@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace SI
 {
-    public class GameOverLine : MonoBehaviour
+    public class EndLine : MonoBehaviour
     {
         [SerializeField] private LayerMask _enemyMask;
 

@@ -14,15 +14,20 @@ namespace SI
         [SerializeField] private string _startGameStr = "PRESS KEY TO START";
         [SerializeField] private TMP_Text _gameOver;
         [SerializeField] private string _gameOverStr = "GAME IS OVER";
+        [SerializeField] private TMP_Text _playerWin;
+        [SerializeField] private TMP_Text _playerScore;
+        [SerializeField] private string _playerWinStr = "YOU WIN";
 
         private void Start()
         {
             _startGame.text = _startGameStr;
             _gameOver.text = _gameOverStr;
+            _playerWin.text = _playerWinStr;
             _startGame.gameObject.SetActive(true);
 
             GameManager.StartGame += OnStartGame;
             GameManager.GameOver += OnGameOver;
+            GameManager.PlayerWin += OnPlayerWin;
 
             GameManager.ChangeScore += OnChangeScore;
             Player.HealthUpdate += OnPlayerHit;
@@ -32,6 +37,7 @@ namespace SI
         {
             GameManager.StartGame -= OnStartGame;
             GameManager.GameOver -= OnGameOver;
+            GameManager.PlayerWin -= OnPlayerWin;
 
             GameManager.ChangeScore -= OnChangeScore;
             Player.HealthUpdate -= OnPlayerHit;
@@ -55,6 +61,12 @@ namespace SI
         private void OnGameOver()
         {
             _gameOver.gameObject.SetActive(true);
+        }
+        
+        private void OnPlayerWin(int score)
+        {
+            _playerScore.text = $"YOUR SCORE: {score}";
+            _playerWin.gameObject.SetActive(true);
         }
     }
 }
