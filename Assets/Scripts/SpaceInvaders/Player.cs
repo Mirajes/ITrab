@@ -17,7 +17,7 @@ namespace SI
             }
         }
         private int _currentHealth = 3;
-        private int _maxHealth = 3;
+        [SerializeField] private int _maxHealth = 3;
 
         [SerializeField] private LevelBounds _levelBounds;
 
@@ -41,6 +41,8 @@ namespace SI
 
         private void Start()
         {
+            CurrentHealth = _maxHealth;
+
             Shoot += OnShoot;
             GameManager.StartGame += OnStartGame;
             GameManager.Step += OnStep;
