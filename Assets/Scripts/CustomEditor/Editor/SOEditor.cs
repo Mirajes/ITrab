@@ -7,19 +7,29 @@ namespace CE
     [CanEditMultipleObjects] // choosing multiple same objects will work with everything 
     public class SOEditor : Editor
     {
-        private SerializedProperty _audioListProp;
+        private SerializedProperty _idProp;
+
+        private SerializedProperty _audiosTypeProp;
+        private SerializedProperty _dangerousAudiosListProp;
+        private SerializedProperty _friendlyAudiosListProp;
+        private SerializedProperty _neutralAudiosListProp;
+
         private SerializedProperty _descriptionProp;
         private SerializedProperty _showListProp;
         private SerializedProperty _showDescriptionProp;
-        private SerializedProperty _idProp;
 
         private void OnEnable()
         {
-            _audioListProp = serializedObject.FindProperty("_audios");
+            _idProp = serializedObject.FindProperty("_id");
+            _audiosTypeProp = serializedObject.FindProperty("_audioType");
+
+            _dangerousAudiosListProp = serializedObject.FindProperty("_dangerousAudios");
+            _friendlyAudiosListProp = serializedObject.FindProperty("_frienlyAudios");
+            _neutralAudiosListProp = serializedObject.FindProperty("_neutralAudios");
+
             _descriptionProp = serializedObject.FindProperty("_soDescription");
             _showListProp = serializedObject.FindProperty("_showList");
             _showDescriptionProp = serializedObject.FindProperty("_showDescription");
-            _idProp = serializedObject.FindProperty("_id");
         }
 
         public override void OnInspectorGUI()
@@ -27,6 +37,7 @@ namespace CE
             serializedObject.Update();
 
             EditorGUILayout.PropertyField(_idProp, true);
+            EditorGUILayout.PropertyField(_audiosTypeProp, true);
 
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("Show AudioList"))
@@ -52,8 +63,26 @@ namespace CE
 
             if (_showListProp.boolValue)
             {
-                GUILayout.Label("Audio List:", EditorStyles.boldLabel);
-                EditorGUILayout.PropertyField(_audioListProp, true);
+                AudioType audioType = (AudioType)_audiosTypeProp.enumValueIndex;
+
+                switch (audioType)
+                {
+                    case AudioType.Dangerous:
+                        GUILayout.Label("Dangerous Audios List:", EditorStyles.boldLabel);
+                        EditorGUILayout.PropertyField(_dangerousAudiosListProp, true);
+                        break;
+                    case AudioType.Friendly:
+                        GUILayout.Label("Friendly Audios List:", EditorStyles.boldLabel);
+                        EditorGUILayout.PropertyField(_friendlyAudiosListProp, true);
+                        break;
+                    case AudioType.Neutral:
+                        GUILayout.Label("Neutral Audios List:", EditorStyles.boldLabel);
+                        EditorGUILayout.PropertyField(_neutralAudiosListProp, true);
+                        break;
+                    default:
+                        Debug.LogWarning("[SOEditor] - no enum");
+                        return;
+                }
             }
 
             if (_showDescriptionProp.boolValue)

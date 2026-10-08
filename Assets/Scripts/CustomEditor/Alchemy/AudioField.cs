@@ -1,10 +1,10 @@
 using System;
 using UnityEngine;
 
-namespace CE
+namespace CE.Alchemy
 {
     [Serializable]
-    public class AudioExample
+    public class AudioField
     {
         [SerializeField] private AudioClip _audioClip;
         [SerializeField][Range(0f, 1f)] private float _volume = 1f;

@@ -12,12 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3da62659b77d0b04f8daab4c4fec7e4e, type: 3}
   m_Name: bl
   m_EditorClassIdentifier: Assembly-CSharp::CE.SO
-  _audios:
-  - _soundClip: {fileID: 0}
-    _volume: 1
-  - _soundClip: {fileID: 0}
-    _volume: 1
-  _id: 
+  _id: blabla
+  _audioType: 2
+  _dangerousAudios:
+  - _audioClip: {fileID: 0}
+    _volume: 0
+  _frienlyAudios: []
+  _neutralAudios:
+  - _audioClip: {fileID: 0}
+    _volume: 0
+  - _audioClip: {fileID: 0}
+    _volume: 0
   _soDescription: AHSIDUA HUISHDIUASHDIUHASDHASFGA8W7FGASDB
   _showList: 1
   _showDescription: 0
