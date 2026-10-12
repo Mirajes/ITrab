@@ -17,5 +17,9 @@ namespace CE
 
         [SerializeField] private bool _showList = false;
         [SerializeField] private bool _showDescription = false;
+
+        public AudioType AudioType => _audioType;
+        public bool ShowList => _showList;
+        public bool ShowDescription => _showDescription;
     }
 }

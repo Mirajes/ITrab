@@ -15,6 +15,7 @@ namespace CE.Alchemy
         [ShowIf(nameof(_isAudioAndDescriptionDisabled))]
         [HelpBox("Press button", HelpBoxMessageType.Info)]
         [ReadOnly] [SerializeField] private string _message = "cool";
+        public string Message => _message;
 
         [LabelText("Description")]
         [ShowIf(nameof(_isDescriptionEnabled))]
