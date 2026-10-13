@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -50,6 +49,7 @@ namespace AtomSingleton
 
             _isNeedToMove = false;
             _accelerationMult = _accelerationMultMin;
+            _velocity = Vector3.zero;
         }
 
         public void OnMoveInput(InputAction.CallbackContext context)
@@ -139,39 +139,6 @@ namespace AtomSingleton
             else
             {
                 _velocity.y += Physics.gravity.y * Time.deltaTime;
-            }
-        }
-    }
-
-    public class UI_ProstoMagazin : MonoBehaviour
-    {
-        public void Open()
-        {
-
-        }
-
-        public void Close()
-        {
-
-        }
-    }
-
-    public class UI_MagazinButton : MonoBehaviour
-    {
-        [SerializeField] private SO_A_Upgrade _upgradeToBuy;
-        [SerializeField] private TMP_Text _upgradeCount_txt;
-        [SerializeField] private TMP_Text _upgradeCost_txt;
-
-        public void TryBuyUpgrade()
-        {
-            if (WalletManager.Instance.CoinCount >= _upgradeToBuy.CurrentCost)
-            {
-                WalletManager.Instance.RemoveCoin(_upgradeToBuy.CurrentCost);
-                // Action?.Invoke
-            }
-            else
-            {
-                Debug.Log($"[{this.name}] - U cant afford it");
             }
         }
     }

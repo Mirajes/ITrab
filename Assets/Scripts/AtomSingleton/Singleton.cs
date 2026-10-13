@@ -10,16 +10,13 @@ namespace AtomSingleton
         {
             if (Instance == null)
             {
-                if (Instance == null)
-                {
-                    Instance = this as T;
-                    DontDestroyOnLoad(this.gameObject);
-                }
-                else
-                {
-                    Destroy(this.gameObject);
-                    return;
-                }
+                Instance = this as T;
+                DontDestroyOnLoad(this.gameObject);
+            }
+            else
+            {
+                Destroy(this.gameObject);
+                return;
             }
         }
     }

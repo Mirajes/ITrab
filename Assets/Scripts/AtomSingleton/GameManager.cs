@@ -17,6 +17,11 @@ namespace AtomSingleton
             _initializer.DeinitInputs(_player);
         }
 
-        private void ResetProgress() { }
+        private void ResetProgress()
+        {
+
+        }
+
+
     }
 }
