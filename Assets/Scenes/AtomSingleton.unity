@@ -388,9 +388,9 @@ MonoBehaviour:
   _controller: {fileID: 692491644}
   _moveSpeed: 2
   _accelerationMultMin: 1
-  _accelerationMultMax: 3
-  _accelerationRaiseMult: 2
-  _rotateLerpSpeed: 5
+  _accelerationMultMax: 10
+  _accelerationRaiseMult: 3
+  _rotateLerpSpeed: 2
   _jumpPower: 5
   _rotateList: []
 --- !u!143 &692491644

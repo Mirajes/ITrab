@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -142,44 +143,36 @@ namespace AtomSingleton
         }
     }
 
-    public class WalletManager : Singleton<WalletManager>
+    public class UI_ProstoMagazin : MonoBehaviour
     {
-        private int _coinCount = 0;
-
-        public static event Action<int> CoinChange;
-
-        public void AddCoin(int coinToAdd)
+        public void Open()
         {
-            _coinCount += coinToAdd;
-            CoinChange?.Invoke(_coinCount);
-        } 
-        public void RemoveCoin(int coinToRemove)
+
+        }
+
+        public void Close()
         {
-            _coinCount -= coinToRemove;
-            CoinChange?.Invoke(_coinCount);
+
         }
     }
 
-    public class Inventory : Singleton<Inventory>
+    public class UI_MagazinButton : MonoBehaviour
     {
+        [SerializeField] private SO_A_Upgrade _upgradeToBuy;
+        [SerializeField] private TMP_Text _upgradeCount_txt;
+        [SerializeField] private TMP_Text _upgradeCost_txt;
 
-    }
-
-    public class UIManager : MonoBehaviour
-    {
-        private void Start()
+        public void TryBuyUpgrade()
         {
-            WalletManager.CoinChange += OnCoinChange;
-        }
-
-        private void OnDestroy()
-        {
-            WalletManager.CoinChange -= OnCoinChange;
-        }
-
-        private void OnCoinChange(int coinAmount)
-        {
-
+            if (WalletManager.Instance.CoinCount >= _upgradeToBuy.CurrentCost)
+            {
+                WalletManager.Instance.RemoveCoin(_upgradeToBuy.CurrentCost);
+                // Action?.Invoke
+            }
+            else
+            {
+                Debug.Log($"[{this.name}] - U cant afford it");
+            }
         }
     }
 }

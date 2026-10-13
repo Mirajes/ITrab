@@ -17,9 +17,16 @@ namespace AtomSingleton
 
         public void DeinitInputs(Player player)
         {
+            if (_inputMap == null) return;
+
+            _inputMap.Disable();
+
             _inputMap.Player_Atom.Move.started -= player.OnMoveInput;
             _inputMap.Player_Atom.Rotate.started -= player.OnRotateInput;
             _inputMap.Player_Atom.Jump.started -= player.OnJumpInput;
+
+            _inputMap.Dispose();
+            _inputMap = null;
         }
     }
 }
