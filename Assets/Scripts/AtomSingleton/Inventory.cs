@@ -2,9 +2,9 @@ using UnityEngine;
 
 namespace AtomSingleton
 {
-    public class Inventory : Singleton<Inventory>
+    public class Inventory : A_Singleton<Inventory>
     {
-        [SerializeField] private MoreCoinsPerCollect _moreCoinsPerCollectUpgrade;
-        public MoreCoinsPerCollect MoreCoinsPerCollect => _moreCoinsPerCollectUpgrade;
+        [SerializeField] private MoreCoinPerCollect _moreCoinPerCollectUpgrade;
+        public MoreCoinPerCollect MoreCoinPerCollect => _moreCoinPerCollectUpgrade;
     }
 }

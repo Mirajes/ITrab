@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace AtomSingleton
 {
-    public class WalletManager : Singleton<WalletManager>
+    public class WalletManager : A_Singleton<WalletManager>
     {
         [SerializeField] private int _coinCount = 0;
         public int CoinCount => _coinCount;

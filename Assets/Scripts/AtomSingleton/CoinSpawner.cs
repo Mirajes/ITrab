@@ -14,7 +14,7 @@ namespace AtomSingleton
             _coin.gameObject.SetActive(false);
 
             WalletManager.Instance.AddCoin(GameContext.Instance.CoinsPerCollect
-                + Inventory.Instance.MoreCoinsPerCollect.Count);
+                + Inventory.Instance.MoreCoinPerCollect.Count);
 
             RespawnCoinAsync(this.destroyCancellationToken).Forget();
         }
