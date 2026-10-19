@@ -6,15 +6,15 @@ namespace AtomSingleton
 {
     public class CoinSpawner : MonoBehaviour
     {
-        [SerializeField] private Coin _coin;
+        [SerializeField] private Transform _coin;
         [SerializeField] private float _respawnDelay = 15f;
 
-        public void OnCoinCollected()
+        private void OnCoinCollected()
         {
             _coin.gameObject.SetActive(false);
 
             WalletManager.Instance.AddCoin(GameContext.Instance.CoinsPerCollect
-                + Inventory.Instance.MoreCoinPerCollect.Count);
+                + Inventory.Instance.MoreCoinPerCollect.CurrentLevel);
 
             RespawnCoinAsync(this.destroyCancellationToken).Forget();
         }
@@ -23,6 +23,12 @@ namespace AtomSingleton
         {
             await UniTask.Delay(System.TimeSpan.FromSeconds(_respawnDelay), cancellationToken: token);
             _coin.gameObject.SetActive(true);
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("CoinCollector"))
+                OnCoinCollected();
         }
     }
 }

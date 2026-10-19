@@ -5,7 +5,7 @@ namespace AtomSingleton
 {
     public class UI_MagazinButton : MonoBehaviour
     {
-        [SerializeField] private SO_A_Upgrade _upgradeToBuy;
+        [SerializeField] private SO_Upgrade _upgradeToBuy;
         [SerializeField] private TMP_Text _upgradeCount_txt;
         [SerializeField] private TMP_Text _upgradeCost_txt;
 

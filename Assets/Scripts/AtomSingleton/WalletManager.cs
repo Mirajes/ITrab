@@ -23,5 +23,15 @@ namespace AtomSingleton
             _coinCount -= coinToRemove;
             CoinChange?.Invoke(_coinCount);
         }
+
+        public void CoinChangeUpdate()
+        {
+            CoinChange?.Invoke(_coinCount);
+        }
+
+        public void OnLoad(int coinAmount)
+        {
+            _coinCount = coinAmount;
+        }
     }
 }

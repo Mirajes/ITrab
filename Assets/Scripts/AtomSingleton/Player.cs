@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -94,7 +93,7 @@ namespace AtomSingleton
 
         }
 
-        private void HandleRotate()
+        private void HandleRotate() // bad movement
         {
             if (_rotateList.Count == 0 && !_isRotating) return;
 
