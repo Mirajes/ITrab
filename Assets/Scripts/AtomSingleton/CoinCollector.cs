@@ -15,6 +15,8 @@ namespace AtomSingleton
 
         private void Start()
         {
+            _decalProjector.gameObject.SetActive(false);
+
             UI_StartMenu.Enter += OnEnter;
             UI_PauseMenu.Exit += OnExit;
         }
@@ -27,17 +29,29 @@ namespace AtomSingleton
 
         private void OnEnter()
         {
+            _decalProjector.gameObject.SetActive(true);
 
+            _ctsUpdateUpgrader = new();
+            UpdateCollectorRadiusAsync(_ctsUpdateUpgrader.Token).Forget();
         }
 
         private void OnExit()
         {
+            _decalProjector.gameObject.SetActive(false);
 
+            StopCts();
         }
 
         private async UniTaskVoid UpdateCollectorRadiusAsync(CancellationToken token)
         {
-            
+            while (true)
+            {
+                token.ThrowIfCancellationRequested();
+
+                await UniTask.Delay(System.TimeSpan.FromSeconds(1), cancellationToken: token);
+                _collider.radius = _baseRadius * (1 + (Inventory.Instance.RaiseCollectRadius.CurrentLevel));
+                _decalProjector.size = new Vector3(_baseRadius * 2, _baseRadius * 2, 5f);
+            }
         }
 
         private void StopCts()

@@ -46,6 +46,8 @@ namespace AtomSingleton
 
         private void OnDestroy()
         {
+            _saveManager.SaveUpgrades();
+
             UI_StartMenu.Enter -= OnEnter;
             UI_PauseMenu.Exit -= OnExit;
             WalletManager.CoinChange -= _saveManager.OnCoinChange;
@@ -53,11 +55,6 @@ namespace AtomSingleton
             _initializer.DeInitInputs(this);
             _initializer.DeInitInputs(_player);
             _initializer.DeInit();
-        }
-
-        private void OnApplicationQuit()
-        {
-            _saveManager.SaveUpgrades();
         }
 
         private void OnEnter()
@@ -80,6 +77,8 @@ namespace AtomSingleton
             StopEarning();
             _initializer.InputMap.AtomPlayer.Disable();
 
+            _saveManager.SaveUpgrades();
+
             // тупой контроллер блокирует телепортацию игрока #2 
             // вообще можно вынести это в метод который будет сам перемещать игрока в позицию
             _player.ForceTransform(_playerTransform_Menu);
@@ -95,8 +94,13 @@ namespace AtomSingleton
 
         private async UniTaskVoid CoinEarningAsync(CancellationToken token)
         {
-            await UniTask.Delay(System.TimeSpan.FromSeconds(1), cancellationToken: token);
-            WalletManager.Instance.AddCoin(Inventory.Instance.PassiveCoinEarning.CurrentLevel);
+            while (true)
+            {
+                token.ThrowIfCancellationRequested();
+
+                await UniTask.Delay(System.TimeSpan.FromSeconds(1), cancellationToken: token);
+                WalletManager.Instance.AddCoin(Inventory.Instance.PassiveCoinEarning.CurrentLevel);
+            }
         }
 
         private void StopEarning()
