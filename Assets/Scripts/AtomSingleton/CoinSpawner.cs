@@ -21,7 +21,7 @@ namespace AtomSingleton
 
         private async UniTaskVoid RespawnCoinAsync(CancellationToken token)
         {
-            await UniTask.Delay(System.TimeSpan.FromSeconds(_respawnDelay), cancellationToken: token);
+            await UniTask.Delay(System.TimeSpan.FromSeconds(_respawnDelay - Inventory.Instance.ReduceCoinSpawnDelay.CurrentLevel), cancellationToken: token); // -1 sec per level
             _coin.gameObject.SetActive(true);
         }
 

@@ -44,7 +44,8 @@ namespace AtomSingleton
 
         private void OnControllerColliderHit(ControllerColliderHit hit)
         {
-            if (!(Mathf.Abs(hit.normal.y) < 0.1f)) return;
+            if (!(Mathf.Abs(hit.normal.y) < 0.1f))
+                return;
 
             _isNeedToMove = false;
             _accelerationMult = _accelerationMultMin;
@@ -53,7 +54,9 @@ namespace AtomSingleton
 
         public void OnMoveInput(InputAction.CallbackContext context)
         {
-            if (_isNeedToMove) return;
+            if (_isNeedToMove)
+                return;
+
             _moveInput = context.ReadValue<float>();
 
             _isNeedToMove = true;
@@ -61,7 +64,8 @@ namespace AtomSingleton
 
         public void OnRotateInput(InputAction.CallbackContext context)
         {
-            if (!context.started) return;
+            if (!context.started)
+                return;
 
             _rotateInput = context.ReadValue<float>();
             _rotateList.Add(_rotateDegrees * _rotateInput);
@@ -88,7 +92,7 @@ namespace AtomSingleton
                 _controller.Move(_velocity * Time.deltaTime);
 
                 _accelerationMult += Time.deltaTime * _accelerationRaiseMult;
-                _accelerationMult = Mathf.Clamp(_accelerationMult, _accelerationMultMin, _accelerationMultMax);
+                _accelerationMult = Mathf.Clamp(_accelerationMult, _accelerationMultMin, _accelerationMultMax * (1 + (1 * Inventory.Instance.SpeedUp.CurrentLevel)));
             }
 
         }
@@ -109,7 +113,7 @@ namespace AtomSingleton
                 transform.rotation = Quaternion.RotateTowards(
                     transform.rotation,
                     targetRotation,
-                    _rotateLerpSpeed * _rotateDegrees * Time.deltaTime
+                    _rotateLerpSpeed * _rotateDegrees * Time.deltaTime * (1 + (0.1f * Inventory.Instance.RotateSpeedUp.CurrentLevel)) // + upgrade
                     );
 
                 if (Quaternion.Angle(transform.rotation, targetRotation) < 0.1f)
@@ -139,6 +143,21 @@ namespace AtomSingleton
             {
                 _velocity.y += Physics.gravity.y * Time.deltaTime;
             }
+        }
+
+        public void ForceTransform(Transform target)
+        {
+            _isNeedToMove = false;
+            _isRotating = false;
+            _velocity = Vector3.zero;
+            _accelerationMult = _accelerationMultMin;
+            _moveInput = 0;
+            _rotateList.Clear();
+
+            _controller.enabled = false;
+
+            this.transform.SetPositionAndRotation(target.position, target.rotation);
+            _controller.enabled = true;
         }
     }
 }

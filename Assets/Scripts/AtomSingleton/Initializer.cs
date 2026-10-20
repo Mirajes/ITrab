@@ -20,26 +20,26 @@ namespace AtomSingleton
 
         public void InitInputs(Player player)
         {
-            _inputMap.Player_Atom.Move.started += player.OnMoveInput;
-            _inputMap.Player_Atom.Rotate.started += player.OnRotateInput;
-            _inputMap.Player_Atom.Jump.started += player.OnJumpInput;
+            _inputMap.AtomPlayer.Move.started += player.OnMoveInput;
+            _inputMap.AtomPlayer.Rotate.started += player.OnRotateInput;
+            _inputMap.AtomPlayer.Jump.started += player.OnJumpInput;
         }
 
         public void DeInitInputs(Player player)
         {
-            _inputMap.Player_Atom.Move.started -= player.OnMoveInput;
-            _inputMap.Player_Atom.Rotate.started -= player.OnRotateInput;
-            _inputMap.Player_Atom.Jump.started -= player.OnJumpInput;
+            _inputMap.AtomPlayer.Move.started -= player.OnMoveInput;
+            _inputMap.AtomPlayer.Rotate.started -= player.OnRotateInput;
+            _inputMap.AtomPlayer.Jump.started -= player.OnJumpInput;
         }
 
         public void InitInputs(GameManager gameManager)
         {
-            _inputMap.UI.Pause.started += gameManager.OnPauseInput;
+            _inputMap.AtomGame.Pause.started += gameManager.OnPauseInput;
         }
 
         public void DeInitInputs(GameManager gameManager)
         {
-            _inputMap.UI.Pause.started -= gameManager.OnPauseInput;
+            _inputMap.AtomGame.Pause.started -= gameManager.OnPauseInput;
         }
     }
 }

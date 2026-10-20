@@ -589,7 +589,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": ""Submit"",
                     ""type"": ""Button"",
                     ""id"": ""7607c7b6-cd76-4816-beef-bd0341cfe950"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false,
@@ -670,16 +670,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""type"": ""PassThrough"",
                     ""id"": ""9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be"",
                     ""expectedControlType"": ""Quaternion"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false,
-                    ""priority"": 0
-                },
-                {
-                    ""name"": ""Pause"",
-                    ""type"": ""Button"",
-                    ""id"": ""383b0665-eded-498c-b1de-989088363846"",
-                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false,
@@ -1104,17 +1094,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""action"": ""TrackedDeviceOrientation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b0108915-afc0-479f-8ea1-da3877676f65"",
-                    ""path"": ""<Keyboard>/backquote"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Pause"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1296,7 +1275,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             ]
         },
         {
-            ""name"": ""Player_Atom"",
+            ""name"": ""AtomPlayer"",
             ""id"": ""36f2dda0-3c76-4cf1-a167-c377436f7bb1"",
             ""actions"": [
                 {
@@ -1409,6 +1388,35 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""AtomGame"",
+            ""id"": ""16545149-c83a-47e0-9046-84c5902536e0"",
+            ""actions"": [
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""ff72b439-5a28-410b-9287-ae3d36127cbb"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false,
+                    ""priority"": 0
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""9504a3f4-74c7-43eb-9d34-1bddbffe1478"",
+                    ""path"": ""<Keyboard>/backquote"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -1497,7 +1505,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_UI_ScrollWheel = m_UI.FindAction("ScrollWheel", throwIfNotFound: true);
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
-        m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
         // PlayerSpace
         m_PlayerSpace = asset.FindActionMap("PlayerSpace", throwIfNotFound: true);
         m_PlayerSpace_Move = m_PlayerSpace.FindAction("Move", throwIfNotFound: true);
@@ -1506,11 +1513,14 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_GameSpace = asset.FindActionMap("GameSpace", throwIfNotFound: true);
         m_GameSpace_Restart = m_GameSpace.FindAction("Restart", throwIfNotFound: true);
         m_GameSpace_Pause = m_GameSpace.FindAction("Pause", throwIfNotFound: true);
-        // Player_Atom
-        m_Player_Atom = asset.FindActionMap("Player_Atom", throwIfNotFound: true);
-        m_Player_Atom_Move = m_Player_Atom.FindAction("Move", throwIfNotFound: true);
-        m_Player_Atom_Rotate = m_Player_Atom.FindAction("Rotate", throwIfNotFound: true);
-        m_Player_Atom_Jump = m_Player_Atom.FindAction("Jump", throwIfNotFound: true);
+        // AtomPlayer
+        m_AtomPlayer = asset.FindActionMap("AtomPlayer", throwIfNotFound: true);
+        m_AtomPlayer_Move = m_AtomPlayer.FindAction("Move", throwIfNotFound: true);
+        m_AtomPlayer_Rotate = m_AtomPlayer.FindAction("Rotate", throwIfNotFound: true);
+        m_AtomPlayer_Jump = m_AtomPlayer.FindAction("Jump", throwIfNotFound: true);
+        // AtomGame
+        m_AtomGame = asset.FindActionMap("AtomGame", throwIfNotFound: true);
+        m_AtomGame_Pause = m_AtomGame.FindAction("Pause", throwIfNotFound: true);
     }
 
     ~@InputSystem_Actions()
@@ -1519,7 +1529,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, InputSystem_Actions.UI.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_PlayerSpace.enabled, "This will cause a leak and performance issues, InputSystem_Actions.PlayerSpace.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_GameSpace.enabled, "This will cause a leak and performance issues, InputSystem_Actions.GameSpace.Disable() has not been called.");
-        UnityEngine.Debug.Assert(!m_Player_Atom.enabled, "This will cause a leak and performance issues, InputSystem_Actions.Player_Atom.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_AtomPlayer.enabled, "This will cause a leak and performance issues, InputSystem_Actions.AtomPlayer.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_AtomGame.enabled, "This will cause a leak and performance issues, InputSystem_Actions.AtomGame.Disable() has not been called.");
     }
 
     /// <summary>
@@ -1789,7 +1800,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_ScrollWheel;
     private readonly InputAction m_UI_TrackedDevicePosition;
     private readonly InputAction m_UI_TrackedDeviceOrientation;
-    private readonly InputAction m_UI_Pause;
     /// <summary>
     /// Provides access to input actions defined in input action map "UI".
     /// </summary>
@@ -1841,10 +1851,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "UI/TrackedDeviceOrientation".
         /// </summary>
         public InputAction @TrackedDeviceOrientation => m_Wrapper.m_UI_TrackedDeviceOrientation;
-        /// <summary>
-        /// Provides access to the underlying input action "UI/Pause".
-        /// </summary>
-        public InputAction @Pause => m_Wrapper.m_UI_Pause;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1901,9 +1907,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @TrackedDeviceOrientation.started += instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.performed += instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.canceled += instance.OnTrackedDeviceOrientation;
-            @Pause.started += instance.OnPause;
-            @Pause.performed += instance.OnPause;
-            @Pause.canceled += instance.OnPause;
         }
 
         /// <summary>
@@ -1945,9 +1948,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @TrackedDeviceOrientation.started -= instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.performed -= instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.canceled -= instance.OnTrackedDeviceOrientation;
-            @Pause.started -= instance.OnPause;
-            @Pause.performed -= instance.OnPause;
-            @Pause.canceled -= instance.OnPause;
         }
 
         /// <summary>
@@ -2196,39 +2196,39 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     /// </summary>
     public GameSpaceActions @GameSpace => new GameSpaceActions(this);
 
-    // Player_Atom
-    private readonly InputActionMap m_Player_Atom;
-    private List<IPlayer_AtomActions> m_Player_AtomActionsCallbackInterfaces = new List<IPlayer_AtomActions>();
-    private readonly InputAction m_Player_Atom_Move;
-    private readonly InputAction m_Player_Atom_Rotate;
-    private readonly InputAction m_Player_Atom_Jump;
+    // AtomPlayer
+    private readonly InputActionMap m_AtomPlayer;
+    private List<IAtomPlayerActions> m_AtomPlayerActionsCallbackInterfaces = new List<IAtomPlayerActions>();
+    private readonly InputAction m_AtomPlayer_Move;
+    private readonly InputAction m_AtomPlayer_Rotate;
+    private readonly InputAction m_AtomPlayer_Jump;
     /// <summary>
-    /// Provides access to input actions defined in input action map "Player_Atom".
+    /// Provides access to input actions defined in input action map "AtomPlayer".
     /// </summary>
-    public struct Player_AtomActions
+    public struct AtomPlayerActions
     {
         private @InputSystem_Actions m_Wrapper;
 
         /// <summary>
         /// Construct a new instance of the input action map wrapper class.
         /// </summary>
-        public Player_AtomActions(@InputSystem_Actions wrapper) { m_Wrapper = wrapper; }
+        public AtomPlayerActions(@InputSystem_Actions wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "Player_Atom/Move".
+        /// Provides access to the underlying input action "AtomPlayer/Move".
         /// </summary>
-        public InputAction @Move => m_Wrapper.m_Player_Atom_Move;
+        public InputAction @Move => m_Wrapper.m_AtomPlayer_Move;
         /// <summary>
-        /// Provides access to the underlying input action "Player_Atom/Rotate".
+        /// Provides access to the underlying input action "AtomPlayer/Rotate".
         /// </summary>
-        public InputAction @Rotate => m_Wrapper.m_Player_Atom_Rotate;
+        public InputAction @Rotate => m_Wrapper.m_AtomPlayer_Rotate;
         /// <summary>
-        /// Provides access to the underlying input action "Player_Atom/Jump".
+        /// Provides access to the underlying input action "AtomPlayer/Jump".
         /// </summary>
-        public InputAction @Jump => m_Wrapper.m_Player_Atom_Jump;
+        public InputAction @Jump => m_Wrapper.m_AtomPlayer_Jump;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
-        public InputActionMap Get() { return m_Wrapper.m_Player_Atom; }
+        public InputActionMap Get() { return m_Wrapper.m_AtomPlayer; }
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
         public void Enable() { Get().Enable(); }
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
@@ -2236,9 +2236,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
         public bool enabled => Get().enabled;
         /// <summary>
-        /// Implicitly converts an <see ref="Player_AtomActions" /> to an <see ref="InputActionMap" /> instance.
+        /// Implicitly converts an <see ref="AtomPlayerActions" /> to an <see ref="InputActionMap" /> instance.
         /// </summary>
-        public static implicit operator InputActionMap(Player_AtomActions set) { return set.Get(); }
+        public static implicit operator InputActionMap(AtomPlayerActions set) { return set.Get(); }
         /// <summary>
         /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
         /// </summary>
@@ -2246,11 +2246,11 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <remarks>
         /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
         /// </remarks>
-        /// <seealso cref="Player_AtomActions" />
-        public void AddCallbacks(IPlayer_AtomActions instance)
+        /// <seealso cref="AtomPlayerActions" />
+        public void AddCallbacks(IAtomPlayerActions instance)
         {
-            if (instance == null || m_Wrapper.m_Player_AtomActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_Player_AtomActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_AtomPlayerActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_AtomPlayerActionsCallbackInterfaces.Add(instance);
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
@@ -2268,8 +2268,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <remarks>
         /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
         /// </remarks>
-        /// <seealso cref="Player_AtomActions" />
-        private void UnregisterCallbacks(IPlayer_AtomActions instance)
+        /// <seealso cref="AtomPlayerActions" />
+        private void UnregisterCallbacks(IAtomPlayerActions instance)
         {
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
@@ -2283,12 +2283,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         }
 
         /// <summary>
-        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="Player_AtomActions.UnregisterCallbacks(IPlayer_AtomActions)" />.
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="AtomPlayerActions.UnregisterCallbacks(IAtomPlayerActions)" />.
         /// </summary>
-        /// <seealso cref="Player_AtomActions.UnregisterCallbacks(IPlayer_AtomActions)" />
-        public void RemoveCallbacks(IPlayer_AtomActions instance)
+        /// <seealso cref="AtomPlayerActions.UnregisterCallbacks(IAtomPlayerActions)" />
+        public void RemoveCallbacks(IAtomPlayerActions instance)
         {
-            if (m_Wrapper.m_Player_AtomActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_AtomPlayerActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
@@ -2298,21 +2298,117 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <remarks>
         /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
         /// </remarks>
-        /// <seealso cref="Player_AtomActions.AddCallbacks(IPlayer_AtomActions)" />
-        /// <seealso cref="Player_AtomActions.RemoveCallbacks(IPlayer_AtomActions)" />
-        /// <seealso cref="Player_AtomActions.UnregisterCallbacks(IPlayer_AtomActions)" />
-        public void SetCallbacks(IPlayer_AtomActions instance)
+        /// <seealso cref="AtomPlayerActions.AddCallbacks(IAtomPlayerActions)" />
+        /// <seealso cref="AtomPlayerActions.RemoveCallbacks(IAtomPlayerActions)" />
+        /// <seealso cref="AtomPlayerActions.UnregisterCallbacks(IAtomPlayerActions)" />
+        public void SetCallbacks(IAtomPlayerActions instance)
         {
-            foreach (var item in m_Wrapper.m_Player_AtomActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_AtomPlayerActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_Player_AtomActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_AtomPlayerActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
     /// <summary>
-    /// Provides a new <see cref="Player_AtomActions" /> instance referencing this action map.
+    /// Provides a new <see cref="AtomPlayerActions" /> instance referencing this action map.
     /// </summary>
-    public Player_AtomActions @Player_Atom => new Player_AtomActions(this);
+    public AtomPlayerActions @AtomPlayer => new AtomPlayerActions(this);
+
+    // AtomGame
+    private readonly InputActionMap m_AtomGame;
+    private List<IAtomGameActions> m_AtomGameActionsCallbackInterfaces = new List<IAtomGameActions>();
+    private readonly InputAction m_AtomGame_Pause;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "AtomGame".
+    /// </summary>
+    public struct AtomGameActions
+    {
+        private @InputSystem_Actions m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public AtomGameActions(@InputSystem_Actions wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "AtomGame/Pause".
+        /// </summary>
+        public InputAction @Pause => m_Wrapper.m_AtomGame_Pause;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_AtomGame; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="AtomGameActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(AtomGameActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="AtomGameActions" />
+        public void AddCallbacks(IAtomGameActions instance)
+        {
+            if (instance == null || m_Wrapper.m_AtomGameActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_AtomGameActionsCallbackInterfaces.Add(instance);
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="AtomGameActions" />
+        private void UnregisterCallbacks(IAtomGameActions instance)
+        {
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="AtomGameActions.UnregisterCallbacks(IAtomGameActions)" />.
+        /// </summary>
+        /// <seealso cref="AtomGameActions.UnregisterCallbacks(IAtomGameActions)" />
+        public void RemoveCallbacks(IAtomGameActions instance)
+        {
+            if (m_Wrapper.m_AtomGameActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="AtomGameActions.AddCallbacks(IAtomGameActions)" />
+        /// <seealso cref="AtomGameActions.RemoveCallbacks(IAtomGameActions)" />
+        /// <seealso cref="AtomGameActions.UnregisterCallbacks(IAtomGameActions)" />
+        public void SetCallbacks(IAtomGameActions instance)
+        {
+            foreach (var item in m_Wrapper.m_AtomGameActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_AtomGameActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="AtomGameActions" /> instance referencing this action map.
+    /// </summary>
+    public AtomGameActions @AtomGame => new AtomGameActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     /// <summary>
     /// Provides access to the input control scheme.
@@ -2526,13 +2622,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Pause" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnPause(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "PlayerSpace" which allows adding and removing callbacks.
@@ -2579,11 +2668,11 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         void OnPause(InputAction.CallbackContext context);
     }
     /// <summary>
-    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Player_Atom" which allows adding and removing callbacks.
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "AtomPlayer" which allows adding and removing callbacks.
     /// </summary>
-    /// <seealso cref="Player_AtomActions.AddCallbacks(IPlayer_AtomActions)" />
-    /// <seealso cref="Player_AtomActions.RemoveCallbacks(IPlayer_AtomActions)" />
-    public interface IPlayer_AtomActions
+    /// <seealso cref="AtomPlayerActions.AddCallbacks(IAtomPlayerActions)" />
+    /// <seealso cref="AtomPlayerActions.RemoveCallbacks(IAtomPlayerActions)" />
+    public interface IAtomPlayerActions
     {
         /// <summary>
         /// Method invoked when associated input action "Move" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
@@ -2606,5 +2695,20 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnJump(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "AtomGame" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="AtomGameActions.AddCallbacks(IAtomGameActions)" />
+    /// <seealso cref="AtomGameActions.RemoveCallbacks(IAtomGameActions)" />
+    public interface IAtomGameActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "Pause" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPause(InputAction.CallbackContext context);
     }
 }
