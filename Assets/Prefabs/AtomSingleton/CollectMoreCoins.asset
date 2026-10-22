@@ -15,5 +15,5 @@ MonoBehaviour:
   _id: collect_more_coins
   _name: Collect MORE
   _description: more coins per collect
-  _currentLevel: 0
+  _currentLevel: 10
   _levels: 0f0000001e0000003c0000005a0000007800000096000000b40000002c01000090010000f401000058020000

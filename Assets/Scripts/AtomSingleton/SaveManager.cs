@@ -28,7 +28,7 @@ namespace AtomSingleton
         {
             foreach (SO_Upgrade upgrade in _upgrades)
             {
-                string saveKey = SAVEKEY_UPGRADE_PREFIX + upgrade.name;
+                string saveKey = SAVEKEY_UPGRADE_PREFIX + upgrade.ID;
 
                 if (PlayerPrefs.HasKey(saveKey))
                 {

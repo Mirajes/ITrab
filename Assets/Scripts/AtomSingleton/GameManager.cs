@@ -46,8 +46,6 @@ namespace AtomSingleton
 
         private void OnDestroy()
         {
-            _saveManager.SaveUpgrades();
-
             UI_StartMenu.Enter -= OnEnter;
             UI_PauseMenu.Exit -= OnExit;
             WalletManager.CoinChange -= _saveManager.OnCoinChange;
@@ -55,6 +53,11 @@ namespace AtomSingleton
             _initializer.DeInitInputs(this);
             _initializer.DeInitInputs(_player);
             _initializer.DeInit();
+        }
+
+        private void OnApplicationQuit()
+        {
+            _saveManager.SaveUpgrades();
         }
 
         private void OnEnter()

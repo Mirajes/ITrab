@@ -8,9 +8,14 @@ namespace AtomSingleton
         [SerializeField] private TMP_Text _coinAmount_txt;
         [SerializeField] private UI_StartMenu _startMenu;
         [SerializeField] private UI_PauseMenu _pauseMenu;
+        [SerializeField] private Canvas _menuCanvas;
+        [SerializeField] private Canvas _gameCanvas;
 
         private void Start()
         {
+            _menuCanvas.gameObject.SetActive(true);
+            _gameCanvas.gameObject.SetActive(false);
+
             UI_StartMenu.Enter += OnEnter;
             UI_PauseMenu.Exit += OnExit;
             WalletManager.CoinChange += OnCoinChange;
@@ -37,12 +42,18 @@ namespace AtomSingleton
 
         private void OnEnter()
         {
+            _gameCanvas.gameObject.SetActive(true);
+            _menuCanvas.gameObject.SetActive(false);
+
             _startMenu.gameObject.SetActive(false);
             _pauseMenu.gameObject.SetActive(false);
         }
 
         private void OnExit()
         {
+            _menuCanvas.gameObject.SetActive(true);
+            _gameCanvas.gameObject.SetActive(false);
+
             _startMenu.gameObject.SetActive(true);
             _pauseMenu.gameObject.SetActive(false);
         }

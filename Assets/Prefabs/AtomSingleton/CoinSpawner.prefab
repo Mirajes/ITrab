@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AtomSingleton.CoinSpawner
   _coin: {fileID: 6143460400297619034}
-  _respawnDelay: 25
+  _respawnDelay: 45
 --- !u!65 &420479689989645489
 BoxCollider:
   m_ObjectHideFlags: 0
